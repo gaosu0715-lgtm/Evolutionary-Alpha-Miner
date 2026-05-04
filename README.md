@@ -1,5 +1,11 @@
 # Evolutionary Alpha Miner
 
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-research--prototype-orange)
+![Topic](https://img.shields.io/badge/topic-evolutionary--alpha--mining-purple)
+![LLM](https://img.shields.io/badge/LLM-guided--symbolic--search-black)
+
 **Family-aware evolutionary alpha mining with LLM-guided symbolic hybridization.**
 
 This repository presents a research framework for automated formulaic alpha discovery.  
