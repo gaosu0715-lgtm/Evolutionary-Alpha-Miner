@@ -1,76 +1,50 @@
-\# Evolutionary Alpha Miner
+# Evolutionary Alpha Miner
 
+**Family-aware evolutionary alpha mining with LLM-guided symbolic hybridization.**
 
+This repository introduces a research framework for automated formulaic alpha discovery.  
+The core idea is to treat alpha expressions as evolvable symbolic programs, then use seed-family deduplication, heterogeneous parent pairing, constrained LLM generation, and simulation feedback to search for new candidates.
 
-A research prototype for formulaic alpha discovery using evolutionary computation and LLM-guided hybridization.
+> This public repository is a sanitized framework.  
+> It does not contain private alpha expressions, API keys, credentials, proprietary datasets, or real simulation results.
 
+---
 
+## Motivation
 
-\## Core Idea
+Naively generating formulaic alphas often leads to near-duplicate expressions, unstable backtests, or high self-correlation with existing candidates.
 
+This project explores a more structured approach:
 
+- avoid near-duplicate parents
+- preserve useful seed signals
+- hybridize heterogeneous expression families
+- use weak gates / regime conditions / correlation breakers
+- feed pass/fail results back into the next generation
 
-This project explores a family-aware alpha mining workflow:
+The goal is not unrestricted formula enumeration, but **correlation-aware evolutionary search**.
 
+---
 
-
-1\. Collect historical alpha candidates.
-
-2\. Normalize expressions and cluster them into seed families.
-
-3\. Avoid near-duplicate parents by selecting representative seeds.
-
-4\. Construct heterogeneous A-B parent pairs:
-
-&#x20;  - A = main signal carrier
-
-&#x20;  - B = gate, regime condition, or correlation breaker
-
-5\. Generate candidate expressions under constraints.
-
-6\. Validate expressions locally.
-
-7\. Evaluate candidates through simulation and submission checks.
-
-8\. Feed back pass/fail information into the next search round.
-
-
-
-\## Method
-
-
-
-The workflow is inspired by:
-
-
-
-\- Genetic Programming
-
-\- Symbolic Regression
-
-\- Evolutionary Computation
-
-\- Program Synthesis
-
-\- Active Learning
-
-\- Automated Alpha Discovery
-
-
-
-The key design is constrained hybridization rather than unrestricted formula enumeration.
-
-
+## Core Workflow
 
 ```text
-
-seed family cleaning
-
-→ heterogeneous parent pairing
-
-→ constrained candidate generation
-
-→ simulation/check feedback
-
-→ next-round search
-
+historical candidates
+        ↓
+expression normalization
+        ↓
+seed family clustering
+        ↓
+family-aware parent sampling
+        ↓
+A-B hybridization
+        ↓
+LLM-constrained candidate generation
+        ↓
+local validation
+        ↓
+simulation / submission checks
+        ↓
+feedback memory
+        ↓
+next generation
