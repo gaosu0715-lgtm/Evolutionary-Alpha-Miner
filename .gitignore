@@ -1,0 +1,23 @@
+# secrets
+.env
+*.key
+*.pem
+
+# private data / results
+rounds/
+memory/
+*.csv
+*.pkl
+*.json
+*.jsonl
+*.log
+
+# notebooks checkpoints
+.ipynb_checkpoints/
+
+# python
+__pycache__/
+*.pyc
+
+# local
+.DS_Store
