@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "Evolutionary Alpha Miner"
+message: "If you use this research prototype, please cite it as below."
+type: software
+authors:
+  - alias: "gaosu0715-lgtm"
+repository-code: "https://github.com/gaosu0715-lgtm/Evolutionary-Alpha-Miner"
+abstract: "A research prototype for family-aware symbolic alpha discovery with evolutionary search and LLM-guided hybridization."
+license: MIT

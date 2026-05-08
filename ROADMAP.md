@@ -1,20 +1,24 @@
 # Roadmap
 
+Evolutionary Alpha Miner is intentionally small at this stage. The goal is to turn a clear research idea into a reproducible public toolkit step by step.
+
 ## v0.1 — Public Framework
 
 - [x] Define family-aware evolutionary alpha mining framework
 - [x] Add sanitized README
 - [x] Add dependency list
 - [x] Add privacy-oriented `.gitignore`
+- [x] Add public contribution boundary
 
 ## v0.2 — Toy Demonstration
 
-- [ ] Add synthetic symbolic-alpha dataset
-- [ ] Implement expression normalization
-- [ ] Implement seed-family clustering
-- [ ] Implement diverse A-B parent sampling
-- [ ] Add simple mutation and hybridization templates
-- [ ] Add fake simulation/evaluation loop
+- [x] Add synthetic symbolic-alpha dataset
+- [x] Implement expression normalization
+- [x] Implement seed-family hashing
+- [x] Implement diverse A-B parent sampling
+- [x] Add simple mutation and hybridization templates
+- [x] Add fake simulation/evaluation loop
+- [ ] Add lightweight tests for deterministic behavior
 
 ## v0.3 — Feedback-Guided Search
 
@@ -23,6 +27,7 @@
 - [ ] Downweight duplicated or failed families
 - [ ] Visualize search history
 - [ ] Compare against random formula generation
+- [ ] Export search-round summaries as CSV or JSON
 
 ## v0.4 — Research Notebook
 
@@ -30,3 +35,11 @@
 - [ ] Add diagrams
 - [ ] Add experiment summary
 - [ ] Add limitations and future directions
+
+## v0.5 — Modular Toolkit
+
+- [ ] Split demo logic into reusable modules
+- [ ] Add expression parser abstraction
+- [ ] Add mutation-template registry
+- [ ] Add pluggable evaluator interface
+- [ ] Add minimal CLI for toy experiments

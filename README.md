@@ -6,91 +6,80 @@
 ![Topic](https://img.shields.io/badge/topic-evolutionary--alpha--mining-purple)
 ![LLM](https://img.shields.io/badge/LLM-guided--symbolic--search-black)
 
-**Family-aware evolutionary alpha mining with LLM-guided symbolic hybridization.**
+**A research prototype for family-aware symbolic alpha discovery with evolutionary search and LLM-guided hybridization.**
 
-This repository presents a research framework for automated formulaic alpha discovery.  
-The core idea is to treat alpha expressions as symbolic programs that can be cleaned, clustered, recombined, evaluated, and improved through feedback.
+Evolutionary Alpha Miner explores a structured way to generate formulaic alpha candidates without collapsing into duplicated expressions, repeated parents, or fragile backtest artifacts.
 
-> This public repository is a sanitized research framework.  
-> It does not contain private alpha expressions, API keys, credentials, proprietary datasets, real alpha IDs, or real simulation results.
+Instead of treating LLMs as unrestricted formula generators, this project uses them as constrained symbolic search assistants inside an evolutionary loop:
+
+- normalize and cluster seed expressions into signal families
+- sample diverse parent pairs across data domains
+- preserve the primary signal while using a secondary signal as a weak modifier
+- validate candidates before evaluation
+- feed pass/fail results back into the next generation
+
+> This public repository is a sanitized research framework. It does not contain private alpha expressions, API keys, credentials, proprietary datasets, real alpha IDs, or real simulation results.
 
 ---
 
-## Why This Project Exists
+## Why It Matters
 
-Naively generating formulaic alphas often leads to:
+Naive alpha generation tends to look productive at first, then quickly runs into familiar problems:
 
-- near-duplicate expressions
-- unstable backtests
-- excessive self-correlation
-- repeated parent signals
-- poor out-of-sample robustness
+| Problem | Why it hurts |
+| --- | --- |
+| Near-duplicate formulas | Search appears active but explores the same signal family repeatedly. |
+| Self-correlation traps | New candidates inherit too much of an existing parent signal. |
+| Weak out-of-sample behavior | Backtests pass locally but fail under broader checks. |
+| Template repetition | The generator reuses the same structures with different variable names. |
+| No memory | Failed ideas keep reappearing because the search loop forgets them. |
 
-This project explores a more structured workflow:
-
-- clean and deduplicate seed families
-- sample heterogeneous parent pairs
-- preserve useful parent signals
-- use weak gates, regime conditions, or correlation breakers
-- validate generated expressions
-- evaluate candidates
-- feed pass/fail results into future search rounds
-
-The goal is not unrestricted formula enumeration, but **correlation-aware evolutionary search**.
+This project frames alpha mining as **correlation-aware symbolic program evolution** rather than open-ended formula enumeration.
 
 ---
 
 ## Core Idea
 
-The framework is built around **A-B hybridization**:
+The central mechanism is **A-B hybridization**:
 
 - **A** is the main signal carrier.
-- **B** is a weak modifier, gate, regime condition, dataset inspiration, or correlation breaker.
+- **B** is a weak gate, regime condition, dataset inspiration, or correlation breaker.
 
-Instead of blindly combining formulas, the system tries to preserve useful signal structure while reducing redundancy.
+The goal is not to blend two formulas aggressively. The goal is to preserve useful signal structure from A while letting B introduce controlled diversity.
 
-```text
-historical candidates
-        ↓
-expression normalization
-        ↓
-seed family clustering
-        ↓
-diverse parent sampling
-        ↓
-A-B hybridization
-        ↓
-candidate generation
-        ↓
-local validation
-        ↓
-simulation / check feedback
-        ↓
-memory update
-        ↓
-next generation
+```mermaid
+flowchart TD
+    A["Historical candidates"] --> B["Expression normalization"]
+    B --> C["Seed-family clustering"]
+    C --> D["Diverse parent sampling"]
+    D --> E["A-B hybrid generation"]
+    E --> F["Local validation"]
+    F --> G["Simulation / check feedback"]
+    G --> H["Feedback memory"]
+    H --> D
 ```
 
 ---
 
-## Method Overview
+## What Makes This Different
 
-### 1. Seed Family Cleaning
+### Family-aware search
 
-Many alpha expressions are only superficial variants of the same idea.  
-The framework normalizes expressions and groups similar structures into seed families.
+Expressions are normalized and assigned family hashes so the search loop can avoid breeding superficial duplicates.
 
-This helps avoid breeding near-duplicate parents.
+### Constrained LLM generation
 
-### 2. Diverse Parent Sampling
+The LLM is not asked to invent arbitrary trading formulas. It operates under mutation rules such as:
 
-Parent pairs are sampled with diversity constraints:
+- preserve A's core signal
+- use B only as a weak modifier
+- avoid destructive A-B spreads
+- avoid repeated templates
+- prefer interpretable structures
 
-- avoid identical expression families
-- reduce repeated parent usage
-- balance different data families
-- prefer heterogeneous tag pairs
-- track used parent-pair hashes
+### Diversity-aware parent sampling
+
+Candidate parents are selected with constraints on seed families, parent reuse, tag pairs, and prior scores.
 
 Example tag pairs:
 
@@ -98,72 +87,60 @@ Example tag pairs:
 price + volume
 price + option
 volume + fundamental
-option + price
 news + price
 analyst + price
+unknown + price
 ```
 
-### 3. Constrained Hybrid Generation
+### Feedback-guided evolution
 
-The generator is not asked to freely invent formulas.
+Evaluation results are categorized into feedback buckets such as:
 
-Instead, it follows constrained mutation logic:
-
-- preserve A's core signal
-- use B as a weak modifier
-- avoid destructive A-B spreads
-- avoid repeated templates
-- avoid excessive smoothing
-- prefer interpretable hybrid structures
-
-Typical mutation modes include:
-
-```text
-weak_gate_hybrid
-regime_hybrid
-mild_corr_breaker
-dataset_substitution
-directional_switch
-```
-
-### 4. Validation and Feedback
-
-Candidates are checked and categorized into feedback buckets:
-
-- confirmed landed candidates
+- landed candidates
 - strong but not landed candidates
-- failed candidates
+- low Sharpe / low fitness failures
 - suspected self-correlation traps
-- low Sharpe / low fitness candidates
-- concentrated-weight failures
 - turnover failures
+- concentrated-weight failures
 
-This feedback can be used to guide the next generation.
+The next generation can use this memory to avoid repeating weak search paths.
 
 ---
 
-## Toy Demo
+## Quickstart
 
-This repository includes a public toy demo using synthetic expressions and a fake evaluator.
-
-It does **not** use real alpha expressions or external trading APIs.
-
-Run:
+Clone the repository:
 
 ```bash
+git clone https://github.com/gaosu0715-lgtm/Evolutionary-Alpha-Miner.git
+cd Evolutionary-Alpha-Miner
+```
+
+Install dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+Run the synthetic demo:
+
+```bash
 python examples/toy_demo.py
 ```
 
-The toy demo shows:
+The demo uses fake expressions and a fake evaluator. It is designed to show the research workflow, not to produce real trading signals.
+
+Expected flow:
 
 ```text
 synthetic seed pool
-→ family hashing
-→ diverse A-B parent pairing
-→ candidate hybridization
-→ fake evaluation
-→ feedback summary
+-> family hashing
+-> diverse A-B parent pairing
+-> constrained candidate hybridization
+-> fake evaluation
+-> feedback summary
 ```
 
 ---
@@ -174,6 +151,8 @@ synthetic seed pool
 Evolutionary-Alpha-Miner/
 ├── README.md
 ├── ROADMAP.md
+├── CONTRIBUTING.md
+├── CITATION.cff
 ├── LICENSE
 ├── requirements.txt
 ├── .gitignore
@@ -183,22 +162,33 @@ Evolutionary-Alpha-Miner/
 
 ---
 
-## Research Context
+## Research Direction
 
 This project sits at the intersection of:
 
-- Genetic Programming
-- Symbolic Regression
-- Evolutionary Computation
-- Program Synthesis
-- LLM Agents
-- Active Learning
-- Automated Alpha Discovery
-- Quantitative Finance Research
+- genetic programming
+- symbolic regression
+- program synthesis
+- LLM agents
+- active learning
+- automated alpha discovery
+- quantitative finance research
 
-The central research question is:
+The main research question:
 
-> Can LLMs improve symbolic alpha search when constrained by seed-family memory, parent diversity, and evaluation feedback?
+> Can LLMs improve symbolic alpha search when they are constrained by seed-family memory, parent diversity, and evaluation feedback?
+
+Future work will focus on turning the toy workflow into a more modular research toolkit:
+
+- expression parser and normalizer
+- seed-family clustering module
+- diversity-aware parent sampler
+- mutation template library
+- feedback memory
+- search-loop visualization
+- benchmark against random generation
+
+See [ROADMAP.md](./ROADMAP.md) for the current plan.
 
 ---
 
@@ -215,25 +205,21 @@ For safety and privacy, this public repository excludes:
 - platform-specific private results
 - production mining notebooks
 
-The public version focuses on the general research framework and reproducible toy examples.
+All included examples are synthetic.
 
 ---
 
-## Planned Work
+## Who This Is For
 
-See [ROADMAP.md](./ROADMAP.md).
+This repository may be useful if you are interested in:
 
-Planned additions include:
+- symbolic alpha research
+- LLM-assisted program search
+- evolutionary computation for formula discovery
+- reducing duplicate candidates in automated search
+- building feedback loops for research agents
 
-- toy symbolic dataset
-- expression normalization module
-- seed-family clustering module
-- diverse parent sampler
-- mutation template library
-- feedback memory module
-- failure-reason analytics
-- search loop visualization
-- benchmark against random generation
+It is intentionally small right now. The goal is to make the research idea easy to inspect, reproduce, and extend.
 
 ---
 
@@ -241,15 +227,15 @@ Planned additions include:
 
 This project is for research and educational purposes only.
 
-It does not provide financial advice, investment advice, trading signals, or proprietary alpha formulas.  
-Any examples in this repository are synthetic and should not be interpreted as real trading strategies.
+It does not provide financial advice, investment advice, trading signals, or proprietary alpha formulas. Any examples in this repository are synthetic and should not be interpreted as real trading strategies.
 
 ---
 
 ## Citation
 
-If you find this project useful, feel free to star the repository or reference it as:
+If you find this project useful, you can cite or reference it as:
 
 ```text
-Evolutionary Alpha Miner: Family-aware evolutionary alpha mining with LLM-guided symbolic hybridization.
+Evolutionary Alpha Miner: Family-aware symbolic alpha discovery with evolutionary search and LLM-guided hybridization.
+https://github.com/gaosu0715-lgtm/Evolutionary-Alpha-Miner
 ```
